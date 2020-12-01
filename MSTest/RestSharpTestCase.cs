@@ -141,6 +141,20 @@ namespace MSTest
             Assert.AreEqual("Akshay", dataResponse.name);
             Console.WriteLine(response.Content);
         }
+
+        /// <summary>
+        /// T.C -> 5
+        /// Givens the employee on delete should return status.
+        /// </summary>
+        [TestMethod]
+        public void GivenEmployee_OnDelete_ShouldReturnStatus()
+        {
+            RestRequest request = new RestRequest("/employees/9",Method.DELETE);
+
+            IRestResponse response = client.Execute(request);
+
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+        }
     }
 }
 
