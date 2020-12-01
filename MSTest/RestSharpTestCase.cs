@@ -120,6 +120,27 @@ namespace MSTest
                 Console.WriteLine(response.Content);
             });
         }
+
+        /// <summary>
+        /// T.C -> 4
+        /// Givens the employee on update should return updated employee.
+        /// </summary>
+        [TestMethod]
+        public void GivenEmployee_OnUpdate_ShouldReturnUpdatedEmployee()
+        {
+            RestRequest request = new RestRequest("employees/3", Method.PUT);
+            JObject jObjectBody = new JObject();
+            jObjectBody.Add("name", "Akshay");
+            jObjectBody.Add("salary", "38000");
+            request.AddParameter("application/json", jObjectBody, ParameterType.RequestBody);
+
+            IRestResponse response = client.Execute(request);
+
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Employee dataResponse = JsonConvert.DeserializeObject<Employee>(response.Content);
+            Assert.AreEqual("Akshay", dataResponse.name);
+            Console.WriteLine(response.Content);
+        }
     }
 }
 
