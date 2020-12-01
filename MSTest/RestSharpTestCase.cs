@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using EmployeePayroll_RestAPI;
 using Newtonsoft.Json;
+using System;
 
 namespace MSTest
 {
@@ -49,6 +50,11 @@ namespace MSTest
             List<Employee> dataResponse = JsonConvert.DeserializeObject<List<Employee>>(response.Content);
             int dataCount = 4;
             Assert.AreEqual(dataCount, dataResponse.Count);
+
+            foreach (Employee emp in dataResponse)
+            {
+                Console.WriteLine("id : " + emp.id + " name : " + emp.name + " salary : " + emp.salary);
+            }
         }
     }
 }
