@@ -2,7 +2,7 @@
 
 namespace EmployeePayroll_RestAPI
 {
-    class EmployeePayrollMain
+    public class EmployeePayrollMain
     {
         static void Main(string[] args)
         {

@@ -5,3 +5,4 @@
   "/employees/update/:id": "/employees/:id",
   "/employees/delete/:id": "/employees/:id"
 }
+
