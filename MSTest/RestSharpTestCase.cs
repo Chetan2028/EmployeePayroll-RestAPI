@@ -59,6 +59,10 @@ namespace MSTest
             }
         }
 
+        /// <summary>
+        /// T.C -> 2
+        /// Givens the employee on post should return add employee.
+        /// </summary>
         [TestMethod]
         public void GivenEmployee_OnPost_ShouldReturnAddEmployee()
         {
@@ -80,6 +84,41 @@ namespace MSTest
             Assert.AreEqual("SRK", dataResponse.name);
             Assert.AreEqual("78526", dataResponse.salary);
             Console.WriteLine(response.Content);
+        }
+
+        /// <summary>
+        /// T.C -> 3
+        /// Givens the employee on post should return multiple employee.
+        /// </summary>
+        [TestMethod]
+        public void GivenEmployee_OnPost_ShouldReturnMultipleEmployee()
+        {
+            //Adding multiple employees to list
+            List<Employee> multipleEmployeeList = new List<Employee>();
+            multipleEmployeeList.Add(new Employee { name = "Vivek", salary = "70000" });
+            multipleEmployeeList.Add(new Employee { name = "Naveen", salary = "80000" });
+            multipleEmployeeList.Add(new Employee { name = "Daya", salary = "90000" });
+
+            multipleEmployeeList.ForEach(employeeData =>
+            {
+                //Arrange
+                RestRequest request = new RestRequest("/employees", Method.POST);
+                JObject jObjectBody = new JObject();
+                jObjectBody.Add("name", employeeData.name);
+                jObjectBody.Add("salary", employeeData.salary);
+
+                request.AddParameter("application/json", jObjectBody, ParameterType.RequestBody);
+
+                //Act
+                IRestResponse response = client.Execute(request);
+
+                //Assert
+                Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+                Employee dataResponse = JsonConvert.DeserializeObject<Employee>(response.Content);
+                Assert.AreEqual(employeeData.name, dataResponse.name);
+                Assert.AreEqual(employeeData.salary, dataResponse.salary);
+                Console.WriteLine(response.Content);
+            });
         }
     }
 }
